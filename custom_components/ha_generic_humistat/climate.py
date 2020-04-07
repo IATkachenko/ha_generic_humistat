@@ -6,6 +6,7 @@ import voluptuous as vol
 
 from homeassistant.components.climate import PLATFORM_SCHEMA, ClimateDevice
 from homeassistant.components.climate.const import (
+    ATTR_HVAC_MODES,
     ATTR_PRESET_MODE,
     CURRENT_HVAC_DRY,
     CURRENT_HVAC_IDLE,
@@ -19,7 +20,6 @@ from homeassistant.components.climate.const import (
 )
 from homeassistant.const import (
     ATTR_ENTITY_ID,
-    ATTR_HVAC_MODES,
     CONF_NAME,
     EVENT_HOMEASSISTANT_START,
     SERVICE_TURN_OFF,
