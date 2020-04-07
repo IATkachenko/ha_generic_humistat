@@ -8,7 +8,6 @@ from homeassistant.components.climate import PLATFORM_SCHEMA, ClimateDevice
 from homeassistant.components.climate.const import (
     ATTR_PRESET_MODE,
     CURRENT_HVAC_DRY,
-    CURRENT_HVAC_HUMIDIFY,
     CURRENT_HVAC_IDLE,
     CURRENT_HVAC_OFF,
     HVAC_MODE_DRY,
@@ -21,7 +20,6 @@ from homeassistant.components.climate.const import (
 )
 from homeassistant.const import (
     ATTR_ENTITY_ID,
-    ATTR_TEMPERATURE,
     CONF_NAME,
     EVENT_HOMEASSISTANT_START,
     PRECISION_HALVES,
@@ -42,6 +40,12 @@ from homeassistant.helpers.event import (
 from homeassistant.helpers.restore_state import RestoreEntity
 
 _LOGGER = logging.getLogger(__name__)
+
+HVAC_MODE_HUMIDIFY = "humidify"
+HVAC_MODES.append(HVAC_MODE_HUMIDIFY) 
+
+CURRENT_HVAC_HUMIDIFY = "humidifying"
+ATTR_HUMIDITY = "humidity"
 
 DEFAULT_TOLERANCE = 5
 DEFAULT_NAME = "Generic Humistat"
