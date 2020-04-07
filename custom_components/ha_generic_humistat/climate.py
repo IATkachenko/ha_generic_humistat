@@ -455,7 +455,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     @property
     def capability_attributes(self):
       return [
-         ATTR_HVAC_MODES: self.hvac_modes,
+         ATTR_HVAC_MODES: self._hvac_list,
          data[ATTR_MIN_HUMIDITY] = self.min_humidity,
          data[ATTR_MAX_HUMIDITY] = self.max_humidity,
       ]
