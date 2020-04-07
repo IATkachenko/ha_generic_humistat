@@ -16,6 +16,7 @@ from homeassistant.components.climate.const import (
     CURRENT_HVAC_DRY,
     CURRENT_HVAC_IDLE,
     CURRENT_HVAC_OFF,
+    HVAC_MODES,
     HVAC_MODE_DRY,
     HVAC_MODE_OFF,
     PRESET_AWAY,
@@ -44,6 +45,7 @@ from homeassistant.helpers.restore_state import RestoreEntity
 _LOGGER = logging.getLogger(__name__)
 
 HVAC_MODE_HUMIDIFY = "humidify"
+HVAC_MODES.append(HVAC_MODE_HUMIDIFY)
 
 CURRENT_HVAC_HUMIDIFY = "humidifying"
 ATTR_HUMIDITY = "humidity"
@@ -461,7 +463,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     @property
     def capability_attributes(self):
       return {
-         ATTR_HVAC_MODES: self._hvac_list,
+         ATTR_HVAC_MODES: self.hvac_modes,
          ATTR_MIN_HUMIDITY: self.min_humidity,
          ATTR_MAX_HUMIDITY: self.max_humidity,
       }
