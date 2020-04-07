@@ -95,7 +95,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     keep_alive = config.get(CONF_KEEP_ALIVE)
     initial_hvac_mode = config.get(CONF_INITIAL_HVAC_MODE)
     away_humidity = config.get(CONF_AWAY_HUMIDITY)
-    unit = '%'
+    unit = hass.config.units.temperature_unit
 
     async_add_entities(
         [
@@ -453,4 +453,4 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     # properties to be a climate device
     @property
     def temperature_unit(self):
-      return hass.config.units.temperature_unit
+      return self._unit
