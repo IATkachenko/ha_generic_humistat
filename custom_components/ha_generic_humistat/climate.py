@@ -41,7 +41,6 @@ from homeassistant.helpers.restore_state import RestoreEntity
 _LOGGER = logging.getLogger(__name__)
 
 HVAC_MODE_HUMIDIFY = "humidify"
-HVAC_MODES.append(HVAC_MODE_HUMIDIFY) 
 
 CURRENT_HVAC_HUMIDIFY = "humidifying"
 ATTR_HUMIDITY = "humidity"
