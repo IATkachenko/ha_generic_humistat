@@ -21,9 +21,6 @@ from homeassistant.const import (
     ATTR_ENTITY_ID,
     CONF_NAME,
     EVENT_HOMEASSISTANT_START,
-    PRECISION_HALVES,
-    PRECISION_TENTHS,
-    PRECISION_WHOLE,
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
     STATE_ON,
@@ -79,7 +76,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
             [HVAC_MODE_DRY, HVAC_MODE_HUMIDIFY, HVAC_MODE_OFF]
         ),
         vol.Optional(CONF_AWAY_HUMIDITY): vol.Coerce(float),
-        vol.Optional(CONF_PRECISION, default=5): vol.Coerce(float),
     }
 )
 
