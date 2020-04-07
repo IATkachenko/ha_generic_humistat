@@ -60,7 +60,6 @@ CONF_OVERMOIST_TOLERANCE = "overmoist_tolerance"
 CONF_KEEP_ALIVE = "keep_alive"
 CONF_INITIAL_HVAC_MODE = "initial_hvac_mode"
 CONF_AWAY_HUMIDITY = "away_humidity"
-CONF_PRECISION = "precision"
 SUPPORT_FLAGS = SUPPORT_TARGET_HUMIDITY
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -100,7 +99,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     keep_alive = config.get(CONF_KEEP_ALIVE)
     initial_hvac_mode = config.get(CONF_INITIAL_HVAC_MODE)
     away_humidity = config.get(CONF_AWAY_HUMIDITY)
-    precision = config.get(CONF_PRECISION)
     unit = '%'
 
     async_add_entities(
@@ -119,7 +117,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 keep_alive,
                 initial_hvac_mode,
                 away_humidity,
-                precision,
                 unit,
             )
         ]
@@ -144,7 +141,6 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         keep_alive,
         initial_hvac_mode,
         away_humidity,
-        precision,
         unit,
     ):
         """Initialize the humistat."""
@@ -158,7 +154,6 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         self._keep_alive = keep_alive
         self._hvac_mode = initial_hvac_mode
         self._saved_target_humidity = target_humidity or away_humidity
-        self._humidity_precision = precision
         if self.ac_mode:
             self._hvac_list = [HVAC_MODE_DRY, HVAC_MODE_OFF]
         else:
@@ -248,13 +243,6 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     def name(self):
         """Return the name of the thermostat."""
         return self._name
-
-    @property
-    def precision(self):
-        """Return the precision of the system."""
-        if self._humidity_precision is not None:
-            return self._humidity_precision
-        return super().precision
 
     @property
     def humidity_unit(self):
