@@ -189,7 +189,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
             """Init on startup."""
             sensor_state = self.hass.states.get(self.sensor_entity_id)
             if sensor_state and sensor_state.state != STATE_UNKNOWN:
-                self._async_update_sumidity(sensor_state)
+                self._async_update_humidity(sensor_state)
 
         self.hass.bus.async_listen_once(EVENT_HOMEASSISTANT_START, _async_startup)
 
