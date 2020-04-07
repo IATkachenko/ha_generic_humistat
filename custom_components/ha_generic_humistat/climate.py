@@ -19,6 +19,7 @@ from homeassistant.components.climate.const import (
 )
 from homeassistant.const import (
     ATTR_ENTITY_ID,
+    ATTR_HVAC_MODES,
     CONF_NAME,
     EVENT_HOMEASSISTANT_START,
     SERVICE_TURN_OFF,
