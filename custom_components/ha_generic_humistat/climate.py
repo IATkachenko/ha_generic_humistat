@@ -6,6 +6,8 @@ import voluptuous as vol
 
 from homeassistant.components.climate import PLATFORM_SCHEMA, ClimateDevice
 from homeassistant.components.climate.const import (
+    ATTR_HUMIDITY,
+    ATTR_HVAC_ACTION,
     ATTR_HVAC_MODES,
     ATTR_MAX_HUMIDITY,
     ATTR_MIN_HUMIDITY,
@@ -462,6 +464,16 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
          ATTR_MIN_HUMIDITY: self.min_humidity,
          ATTR_MAX_HUMIDITY: self.max_humidity,
       }
+
+    @property
+    def state_attributes(self):
+      return {
+          ATTR_CURRENT_HUMIDITY: self.current_humidity,
+          ATTR_HUMIDITY: self.target_humidity,
+          ATTR_HVAC_ACTION: self.hvac_action,
+          ATTR_PRESET_MODE: self.preset_mode,
+      }
+ 
 
     @property
     def temperature_unit(self):
