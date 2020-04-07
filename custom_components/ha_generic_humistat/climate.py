@@ -449,3 +449,8 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
             await self._async_control_moisturizing(force=True)
 
         await self.async_update_ha_state()
+
+    # properties to be a climate device
+    @property
+    def temperature_unit(self):
+      return hass.config.units.temperature_unit
