@@ -7,6 +7,8 @@ import voluptuous as vol
 from homeassistant.components.climate import PLATFORM_SCHEMA, ClimateDevice
 from homeassistant.components.climate.const import (
     ATTR_HVAC_MODES,
+    ATTR_MAX_HUMIDITY,
+    ATTR_MIN_HUMIDITY,
     ATTR_PRESET_MODE,
     CURRENT_HVAC_DRY,
     CURRENT_HVAC_IDLE,
@@ -65,9 +67,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Required(CONF_HUMIDIFYER): cv.entity_id,
         vol.Required(CONF_SENSOR): cv.entity_id,
         vol.Optional(CONF_AC_MODE): cv.boolean,
-        vol.Optional(CONF_MAX_HUMIDITY): vol.Coerce(float),
+        vol.Optional(CONF_MAX_HUMIDITY, default=ATTR_MAX_HUMIDITY): vol.Coerce(float),
         vol.Optional(CONF_MIN_DUR): vol.All(cv.time_period, cv.positive_timedelta),
-        vol.Optional(CONF_MIN_HUMIDITY): vol.Coerce(float),
+        vol.Optional(CONF_MIN_HUMIDITY, default=ATTR_MIN_HUMIDITY): vol.Coerce(float),
         vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
         vol.Optional(CONF_DRYNESS_TOLERANCE, default=DEFAULT_TOLERANCE): vol.Coerce(float),
         vol.Optional(CONF_OVERMOIST_TOLERANCE, default=DEFAULT_TOLERANCE): vol.Coerce(float),
