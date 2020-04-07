@@ -11,7 +11,6 @@ from homeassistant.components.climate.const import (
     CURRENT_HVAC_IDLE,
     CURRENT_HVAC_OFF,
     HVAC_MODE_DRY,
-    HVAC_MODE_HUMIDIFY,
     HVAC_MODE_OFF,
     PRESET_AWAY,
     PRESET_NONE,
