@@ -451,6 +451,15 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         await self.async_update_ha_state()
 
     # properties to be a climate device
+
+    @property
+    def capability_attributes(self):
+      return [
+         ATTR_HVAC_MODES: self.hvac_modes,
+         data[ATTR_MIN_HUMIDITY] = self.min_humidity,
+         data[ATTR_MAX_HUMIDITY] = self.max_humidity,
+      ]
+
     @property
     def temperature_unit(self):
       return self._unit
