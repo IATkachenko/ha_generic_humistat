@@ -1,8 +1,14 @@
 {
-  "state": {
-    "humidify": "Humidify"
+  "state_attributes": {
+    "climate": {
+      "hvac_action": {
+        "humidifying": "Humidifying"
+      }
+    }
   },
-  "operation": {
-    "humidifying": "Humidifying"
+  "state": {
+    "climate": {
+      "humidify": "Humidify"
+    }
   }
 }
