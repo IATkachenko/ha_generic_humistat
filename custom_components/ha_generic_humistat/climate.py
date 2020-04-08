@@ -165,7 +165,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         self._unit = unit
         self._support_flags = SUPPORT_FLAGS | SUPPORT_PRESET_MODE
         self._is_away = False
-
+        self._preset_mode = self._hvac_mode
     async def async_added_to_hass(self):
         """Run when entity about to be added."""
         await super().async_added_to_hass()
