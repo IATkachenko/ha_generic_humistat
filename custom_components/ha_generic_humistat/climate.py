@@ -125,7 +125,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             )
         ]
     )
-    #hass.states.set("climate.humidify", "humidify_state")
+    hass.states.async_set("climate.humidify", "humidify_state")
 
 class GenericHumistat(ClimateDevice, RestoreEntity):
     """Representation of a Generic Humistat device."""
