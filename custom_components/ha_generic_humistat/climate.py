@@ -284,6 +284,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     @property
     def hvac_modes(self):
         """List of available operation modes."""
+        _LOGGER.warning(self._hvac_list)
         return self._hvac_list
 
     @property
