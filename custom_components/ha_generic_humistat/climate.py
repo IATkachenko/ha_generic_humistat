@@ -299,7 +299,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
             await self._async_control_moisturizing(force=True)
         elif preset_mode == PRESET_NONE:
             self._preset_mode = PRESET_NONE
-             if self._is_device_active:
+            if self._is_device_active:
                 await self._async_humidifyer_turn_off()
         else:
             _LOGGER.error("Unrecognized hvac mode: %s", hvac_mode)
