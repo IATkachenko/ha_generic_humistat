@@ -1,0 +1,10 @@
+{
+  "state_attributes": {
+    "hvac_action": {
+      "humidifying": "Humidifying in strings.climate"
+    }
+  },
+  "state": {
+    "humidify": "Humidify in strings.climate"
+  }
+}
