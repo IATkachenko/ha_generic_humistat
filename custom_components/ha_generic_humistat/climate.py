@@ -64,7 +64,6 @@ CONF_DRYNESS_TOLERANCE = "dryness_tolerance"
 CONF_OVERMOIST_TOLERANCE = "overmoist_tolerance"
 CONF_KEEP_ALIVE = "keep_alive"
 CONF_INITIAL_HVAC_MODE = "initial_hvac_mode"
-CONF_AWAY_HUMIDITY = "away_humidity"
 SUPPORT_FLAGS = SUPPORT_TARGET_HUMIDITY | SUPPORT_PRESET_MODE
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -102,7 +101,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     overmoist_tolerance = config.get(CONF_OVERMOIST_TOLERANCE)
     keep_alive = config.get(CONF_KEEP_ALIVE)
     initial_hvac_mode = config.get(CONF_INITIAL_HVAC_MODE)
-    away_humidity = config.get(CONF_AWAY_HUMIDITY)
     unit = hass.config.units.temperature_unit
 
     async_add_entities(
@@ -120,7 +118,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 overmoist_tolerance,
                 keep_alive,
                 initial_hvac_mode,
-                away_humidity,
                 unit,
             )
         ]
@@ -143,7 +140,6 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         overmoist_tolerance,
         keep_alive,
         initial_hvac_mode,
-        away_humidity,
         unit,
     ):
         """Initialize the humistat."""
@@ -156,11 +152,11 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         self._overmoist_tolerance = overmoist_tolerance
         self._keep_alive = keep_alive
         self._hvac_mode = initial_hvac_mode
-        self._saved_target_humidity = target_humidity or away_humidity
+        self._saved_target_humidity = target_humidity 
         if self.ac_mode:
-            self._hvac_list = [HVAC_MODE_DRY, HVAC_MODE_OFF]
+            self._presets_list = [HVAC_MODE_DRY, PRESET_NONE]
         else:
-            self._hvac_list = [HVAC_MODE_HUMIDIFY, HVAC_MODE_OFF]
+            self._presets_list = [HVAC_MODE_HUMIDIFY, PRESET_NONE]
         self._active = False
         self._cur_humidity = None
         self._humidity_lock = asyncio.Lock()
@@ -168,10 +164,7 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
         self._max_humidity = max_humidity
         self._target_humidity = target_humidity
         self._unit = unit
-        self._support_flags = SUPPORT_FLAGS
-        if away_humidity:
-            self._support_flags = SUPPORT_FLAGS | SUPPORT_PRESET_MODE
-        self._away_humidity = away_humidity
+        self._support_flags = SUPPORT_FLAGS | SUPPORT_PRESET_MODE
         self._is_away = False
 
     async def async_added_to_hass(self):
@@ -284,29 +277,39 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     @property
     def hvac_modes(self):
         """List of available operation modes."""
-        _LOGGER.warning(self._hvac_list)
-        return self._hvac_list
+        #only HVAC_MODE_OFF is supported
+        return [HVAC_MODE_OFF]
 
     @property
     def preset_mode(self):
         """Return the current preset mode, e.g., home, away, temp."""
-        return PRESET_AWAY if self._is_away else PRESET_NONE
+        return self._preset_mode
 
     @property
     def preset_modes(self):
         """Return a list of available preset modes or PRESET_NONE if _away_humidity is undefined."""
-        return [PRESET_NONE, HVAC_MODE_HUMIDIFY]
-#        return [PRESET_NONE, PRESET_AWAY] if self._away_humidity else PRESET_NONE
+        return self._presets_list
+
+    async def async_set_preset_mode(self, preset_mode):        
+        if preset_mode == HVAC_MODE_HUMIDIFY:
+            self._preset_mode = HVAC_MODE_HUMIDIFY
+            await self._async_control_moisturizing(force=True)
+        elif preset_mode == HVAC_MODE_DRY:
+            self._preset_mode = HVAC_MODE_DRY
+            await self._async_control_moisturizing(force=True)
+        elif preset_mode == PRESET_NONE:
+            self._preset_mode = PRESET_NONE
+             if self._is_device_active:
+                await self._async_humidifyer_turn_off()
+        else:
+            _LOGGER.error("Unrecognized hvac mode: %s", hvac_mode)
+            return
+
+
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set hvac mode."""
-        if hvac_mode == HVAC_MODE_HUMIDIFY:
-            self._hvac_mode = HVAC_MODE_HUMIDIFY
-            await self._async_control_moisturizing(force=True)
-        elif hvac_mode == HVAC_MODE_DRY:
-            self._hvac_mode = HVAC_MODE_DRY
-            await self._async_control_moisturizing(force=True)
-        elif hvac_mode == HVAC_MODE_OFF:
+        if hvac_mode == HVAC_MODE_OFF:
             self._hvac_mode = HVAC_MODE_OFF
             if self._is_device_active:
                 await self._async_humidifyer_turn_off()
