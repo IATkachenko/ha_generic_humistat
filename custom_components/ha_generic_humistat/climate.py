@@ -295,7 +295,8 @@ class GenericHumistat(ClimateDevice, RestoreEntity):
     @property
     def preset_modes(self):
         """Return a list of available preset modes or PRESET_NONE if _away_humidity is undefined."""
-        return [PRESET_NONE, PRESET_AWAY] if self._away_humidity else PRESET_NONE
+        return [PRESET_NONE, HVAC_MODE_HUMIDIFY]
+#        return [PRESET_NONE, PRESET_AWAY] if self._away_humidity else PRESET_NONE
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set hvac mode."""
