@@ -82,7 +82,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_INITIAL_HVAC_MODE): vol.In(
             [HVAC_MODE_DRY, HVAC_MODE_HUMIDIFY, HVAC_MODE_OFF]
         ),
-        vol.Optional(CONF_AWAY_HUMIDITY): vol.Coerce(float),
     }
 )
 
