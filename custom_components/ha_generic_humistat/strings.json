@@ -1,0 +1,8 @@
+{
+  "state": {
+    "humidify": "Humidify"
+  },
+  "operation": {
+    "humidifying": "Humidifying"
+  }
+}
